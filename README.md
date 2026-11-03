@@ -1,4 +1,4 @@
-# pypwr2 v0.2.1
+# pypwr2 v0.2.2
 A Python port of the [pwr](https://github.com/heliosdrm/pwr) package in R
 
 ## Scope and Approach
@@ -23,4 +23,14 @@ Functions not ported yet:
 
 ## Note: 
 
-Where R uses the built in command uniroot to solve for whatever is null between h, n(s), sig.level, and power, this port uses root_scalar with method brentq from scipy optimize. Even though both functions use Brent's Method as a root finding algorithm, there has been found a mathematical results discrepancy of approximately 0.001% in results. While this doesn't affect sample sizing in a practical sense, this must be noted for transparency.
+Where R uses the built in command `uniroot` to solve for whatever is null between h, n(s), sig.level, and power, this port uses `root_scalar` with method brentq from SciPy optimize. Even though both functions use Brent's Method as a root finding algorithm, there has been found a mathematical results discrepancy of approximately 0.001% in results. This is due to the default tolerance levels implemented by `root_scalar` from SciPy optimize and `uniroot` used by base R. This results in different stopping points by the different languages.
+
+The tolerances are as follows:
+- `uniroot` in R: `tol = .Machine$double.eps^0.25` or approximately 0.0000122 
+- `root_scalar` in Python: `xtol = 2e-12` or 0.000000000002 for absolute tolerance
+
+Due to `root_scalar` having a much smaller tolerance by multiple powers of 10, this results in a more precise result by default than `uniroot` in R. Therefore, this project does not elect to adjust the tolerance levels due to the increased precision.
+
+Changing the tolerance to match the R versions could be done in a fork by adding args in the `root_scalar` command for `xtol` and `ytol` for all calculations besides power.
+
+ex: `h = root_scalar(fun, bracket=[2 + 1e-10, 1e9], method='brentq', xtol=np.finfo(float).eps**0.25, rtol=np.finfo(float).eps**0.25)`
