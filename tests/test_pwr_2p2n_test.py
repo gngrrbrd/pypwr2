@@ -1,5 +1,7 @@
-from pypwr2 import pwr_2p2n_test as pwr
+import pypwr2 as pwr
 import pytest
+from scipy.stats import norm
+from scipy.optimize import root_scalar
 
 def test_h():
     assert round(pwr.pwr_2p2n_test(h=None,n1=10,n2=10,sig_level=0.05,power=0.8)["h"], 5) == 1.25291

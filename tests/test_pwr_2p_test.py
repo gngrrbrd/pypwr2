@@ -1,4 +1,4 @@
-from pypwr2 import pwr_2p_test as pwr
+import pypwr2 as pwr
 import pytest
 
 def test_h():
