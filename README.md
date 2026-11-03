@@ -1,4 +1,4 @@
-# pypwr2 v0.2.2
+# pypwr2 v0.2.3
 A Python port of the [pwr](https://github.com/heliosdrm/pwr) package in R
 
 ## Scope and Approach

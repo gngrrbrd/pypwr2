@@ -1,6 +1,6 @@
 [project]
 name = "pypwr2"
-version = "0.2.2"
+version = "0.2.3"
 description = "A python port of the R package 'pwr'"
 readme = "README.md"
 authors = [
